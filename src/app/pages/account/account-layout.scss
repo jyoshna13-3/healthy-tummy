@@ -1,7 +1,7 @@
 .account-page {
   background:
-    radial-gradient(circle at 8% 8%, rgba(241, 225, 210, 0.55), transparent 34%),
-    radial-gradient(circle at 92% 92%, rgba(232, 238, 226, 0.65), transparent 38%), var(--cream);
+    radial-gradient(circle at 8% 8%, rgba(var(--beige-rgb), 0.45), transparent 34%),
+    radial-gradient(circle at 92% 92%, rgba(var(--sage-rgb), 0.14), transparent 38%), var(--cream);
 }
 
 .account-shell {
@@ -62,14 +62,14 @@
 
     &:hover {
       background: var(--accent-soft);
-      color: var(--ink);
+      color: var(--accent-strong);
     }
 
     &.is-active {
       border-color: var(--line);
-      background: #fffdf9;
-      color: var(--ink);
-      box-shadow: 0 12px 30px -28px rgba(43, 29, 20, 0.6);
+      background: var(--surface);
+      color: var(--accent-strong);
+      box-shadow: 0 12px 30px -28px rgba(var(--shadow-rgb), 0.6);
 
       svg {
         color: var(--accent);
@@ -83,11 +83,11 @@
   margin-top: 1.5rem;
   font-size: 0.82rem;
   font-weight: 600;
-  color: var(--accent);
+  color: var(--accent-strong);
   text-decoration: none;
 
   &:hover {
-    color: var(--accent-hover);
+    color: var(--accent-deep);
   }
 }
 
@@ -104,7 +104,7 @@
   padding: 1rem 1.15rem;
   border: 1px solid var(--line);
   border-radius: 14px;
-  background: var(--sage-soft);
+  background: var(--surface);
 
   p {
     margin: 0;
@@ -121,7 +121,7 @@
 
   .ht-button {
     flex: 0 0 auto;
-    background: #fffdf9;
+    background: var(--cream);
   }
 }
 

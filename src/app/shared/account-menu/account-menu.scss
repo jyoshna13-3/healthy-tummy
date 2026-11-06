@@ -16,8 +16,8 @@
   padding: 0;
   border: 1px solid var(--line);
   border-radius: 50%;
-  background: var(--sage-soft);
-  color: var(--sage);
+  background: var(--cream-deep);
+  color: var(--ink-soft);
   cursor: pointer;
   transition:
     background-color 0.2s ease,
@@ -33,7 +33,7 @@
   &:focus-visible,
   &.is-open {
     background: var(--accent-soft);
-    color: var(--accent);
+    color: var(--accent-strong);
     transform: translateY(-1px);
   }
 }
@@ -47,8 +47,8 @@
   padding: 0.75rem;
   border: 1px solid var(--line);
   border-radius: 20px;
-  background: #fffdf9;
-  box-shadow: 0 30px 70px -34px rgba(43, 29, 20, 0.55);
+  background: var(--surface);
+  box-shadow: 0 30px 70px -34px rgba(var(--shadow-rgb), 0.55);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -79,7 +79,7 @@
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--accent-strong);
 }
 
 .account-title {
@@ -112,7 +112,7 @@
   padding: 0.85rem 1.1rem;
   border-radius: 12px;
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
   font-size: 0.9rem;
   font-weight: 600;
   text-decoration: none;
@@ -160,7 +160,7 @@
   height: 42px;
   border-radius: 50%;
   background: var(--accent-soft);
-  color: var(--accent);
+  color: var(--accent-strong);
   font-family: var(--font-display);
   font-size: 0.95rem;
   font-weight: 600;
@@ -215,13 +215,13 @@
   &:hover,
   &:focus-visible {
     background: var(--accent-soft);
-    color: var(--ink);
+    color: var(--accent-strong);
   }
 }
 
 .account-logout {
   margin-top: 0.25rem;
-  color: var(--accent);
+  color: var(--accent-strong);
 
   svg {
     color: var(--accent);

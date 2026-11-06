@@ -1,6 +1,6 @@
 .checkout-page {
   background:
-    radial-gradient(circle at 10% 12%, rgba(241, 225, 210, 0.55), transparent 36%), var(--cream);
+    radial-gradient(circle at 10% 12%, rgba(var(--beige-rgb), 0.45), transparent 36%), var(--cream);
 }
 
 .checkout-head {
@@ -44,11 +44,11 @@
   flex: 0 0 auto;
   font-size: 0.78rem;
   font-weight: 600;
-  color: var(--accent);
+  color: var(--accent-strong);
   text-decoration: none;
 
   &:hover {
-    color: var(--accent-hover);
+    color: var(--accent-deep);
   }
 }
 
@@ -80,6 +80,10 @@
   &.is-selected {
     border-color: var(--accent);
     background: var(--accent-soft);
+
+    .checkout-address-line {
+      color: var(--ink);
+    }
   }
 }
 
@@ -88,7 +92,7 @@
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--accent-strong);
 }
 
 .checkout-address-line {

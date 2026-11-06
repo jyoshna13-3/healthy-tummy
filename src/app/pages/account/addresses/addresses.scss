@@ -44,7 +44,7 @@
 
   &:hover {
     background: var(--accent-soft);
-    color: var(--accent);
+    color: var(--accent-strong);
   }
 }
 
@@ -68,7 +68,7 @@
 .field-error {
   font-size: 0.72rem;
   font-weight: 500;
-  color: #8d3023;
+  color: var(--danger);
 }
 
 .address-form-actions {
@@ -88,8 +88,8 @@
   padding: 1.1rem 1.2rem;
   border: 1px solid var(--line);
   border-radius: 16px;
-  background: #fffdf9;
-  box-shadow: 0 18px 40px -40px rgba(43, 29, 20, 0.5);
+  background: var(--surface);
+  box-shadow: 0 18px 40px -40px rgba(var(--shadow-rgb), 0.5);
 
   header {
     display: flex;
@@ -132,12 +132,12 @@
 
 .address-label {
   background: var(--sage-soft);
-  color: var(--sage);
+  color: var(--sage-strong);
 }
 
 .address-default {
   background: var(--accent-soft);
-  color: var(--accent-hover);
+  color: var(--accent-strong);
 }
 
 .address-actions {
@@ -148,21 +148,21 @@
     padding: 0;
     border: 0;
     background: transparent;
-    color: var(--accent);
+    color: var(--accent-strong);
     font-family: var(--font-body);
     font-size: 0.75rem;
     font-weight: 600;
     cursor: pointer;
 
     &:hover {
-      color: var(--accent-hover);
+      color: var(--accent-deep);
     }
 
     &.is-danger {
-      color: #9a3727;
+      color: var(--danger);
 
       &:hover {
-        color: #7d2a1d;
+        color: var(--danger-strong);
       }
     }
   }
@@ -185,7 +185,7 @@
 
   &:hover {
     background: var(--accent-soft);
-    color: var(--accent);
+    color: var(--accent-strong);
   }
 }
 

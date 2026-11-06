@@ -22,8 +22,8 @@
   padding: 1.15rem 1.25rem;
   border: 1px solid var(--line);
   border-radius: 16px;
-  background: #fffdf9;
-  box-shadow: 0 18px 40px -38px rgba(43, 29, 20, 0.5);
+  background: var(--surface);
+  box-shadow: 0 18px 40px -38px rgba(var(--shadow-rgb), 0.5);
 }
 
 .order-head {
@@ -54,24 +54,24 @@
   padding: 0.35rem 0.65rem;
   border-radius: 999px;
   background: var(--sage-soft);
-  color: var(--sage);
+  color: var(--sage-strong);
   font-size: 0.7rem;
   font-weight: 600;
   white-space: nowrap;
 
   &[data-status='Preparing'] {
     background: var(--accent-soft);
-    color: var(--accent-hover);
+    color: var(--accent-strong);
   }
 
   &[data-status='Out for delivery'] {
-    background: #e6eff6;
-    color: #3c6382;
+    background: var(--cream-deep);
+    color: var(--ink);
   }
 
   &[data-status='Cancelled'] {
-    background: #f8e5df;
-    color: #8d3023;
+    background: var(--danger-soft);
+    color: var(--danger);
   }
 }
 
