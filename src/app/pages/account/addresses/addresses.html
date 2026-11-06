@@ -1,0 +1,160 @@
+<div class="ht-section-head">
+  <div>
+    <p class="ht-eyebrow">Delivery details</p>
+    <h2 class="panel-title">My Addresses</h2>
+  </div>
+  @if (!formOpen()) {
+    <button type="button" class="ht-button" (click)="openAddForm()">+ Add new address</button>
+  }
+</div>
+
+@if (formOpen()) {
+  <form class="address-form ht-card" [formGroup]="form" (ngSubmit)="saveAddress()" novalidate>
+    <div class="address-form-head">
+      <div>
+        <p class="ht-eyebrow">{{ editingId() ? 'Update address' : 'New address' }}</p>
+        <h3>{{ editingId() ? 'Edit your delivery address' : 'Add a delivery address' }}</h3>
+      </div>
+      <button
+        type="button"
+        class="address-close"
+        aria-label="Close address form"
+        (click)="closeForm()"
+      >
+        ×
+      </button>
+    </div>
+
+    <div class="address-grid">
+      <label class="ht-field">
+        <span>Label</span>
+        <select formControlName="label">
+          <option value="Home">Home</option>
+          <option value="Office">Office</option>
+          <option value="Other">Other</option>
+        </select>
+      </label>
+
+      <label class="ht-field">
+        <span>House / flat number</span>
+        <input type="text" formControlName="houseNumber" placeholder="e.g. 12B" />
+        @if (hasError('houseNumber')) {
+          <small class="field-error">Please add a house or flat number.</small>
+        }
+      </label>
+
+      <label class="ht-field">
+        <span>Street</span>
+        <input type="text" formControlName="street" placeholder="Street or lane" />
+        @if (hasError('street')) {
+          <small class="field-error">Please add a street.</small>
+        }
+      </label>
+
+      <label class="ht-field">
+        <span>Area</span>
+        <input type="text" formControlName="area" placeholder="Neighbourhood or area" />
+        @if (hasError('area')) {
+          <small class="field-error">Please add an area.</small>
+        }
+      </label>
+
+      <label class="ht-field">
+        <span>Landmark <em>(optional)</em></span>
+        <input type="text" formControlName="landmark" placeholder="Near a familiar place" />
+      </label>
+
+      <label class="ht-field">
+        <span>City</span>
+        <input type="text" formControlName="city" placeholder="City" />
+        @if (hasError('city')) {
+          <small class="field-error">Please add a city.</small>
+        }
+      </label>
+
+      <label class="ht-field">
+        <span>State</span>
+        <input type="text" formControlName="state" placeholder="State" />
+        @if (hasError('state')) {
+          <small class="field-error">Please add a state.</small>
+        }
+      </label>
+
+      <label class="ht-field">
+        <span>Pincode</span>
+        <input
+          type="text"
+          formControlName="pincode"
+          placeholder="6-digit pincode"
+          inputmode="numeric"
+          maxlength="6"
+        />
+        @if (hasError('pincode')) {
+          <small class="field-error">Please add a valid 6-digit pincode.</small>
+        }
+      </label>
+    </div>
+
+    <div class="address-form-actions">
+      <button type="button" class="ht-button ht-button--secondary" (click)="closeForm()">
+        Cancel
+      </button>
+      <button type="submit" class="ht-button">
+        {{ editingId() ? 'Save changes' : 'Save address' }}
+      </button>
+    </div>
+  </form>
+}
+
+@if (addresses().length > 0) {
+  <div class="address-list">
+    @for (address of addresses(); track address.id) {
+      <article class="address-card">
+        <header>
+          <div class="address-labels">
+            <span class="address-label">{{ address.label }}</span>
+            @if (address.isDefault) {
+              <span class="address-default">Default</span>
+            }
+          </div>
+          <div class="address-actions">
+            <button type="button" (click)="editAddress(address)">Edit</button>
+            <button type="button" class="is-danger" (click)="removeAddress(address.id)">
+              Delete
+            </button>
+          </div>
+        </header>
+
+        <p class="address-line">{{ address.houseNumber }}, {{ address.street }}</p>
+        <p>{{ address.area }}{{ address.landmark ? ', ' + address.landmark : '' }}</p>
+        <p>{{ address.city }}, {{ address.state }} — {{ address.pincode }}</p>
+
+        @if (!address.isDefault) {
+          <button type="button" class="address-default-action" (click)="makeDefault(address.id)">
+            Set as default
+          </button>
+        }
+      </article>
+    }
+  </div>
+} @else if (!formOpen()) {
+  <div class="ht-empty">
+    <span class="ht-empty-icon">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z" />
+        <circle cx="12" cy="10" r="2.5" />
+      </svg>
+    </span>
+    <h3>No saved addresses yet</h3>
+    <p>Add your home or office address so checkout can feel quick and effortless.</p>
+    <button type="button" class="ht-button" (click)="openAddForm()">Add your first address</button>
+  </div>
+}

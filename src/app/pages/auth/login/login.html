@@ -1,0 +1,177 @@
+<section class="ht-page auth-page">
+  <div class="ht-container auth-shell">
+    <aside class="auth-intro">
+      <span class="ht-eyebrow">Healthy Tummy account</span>
+      <h1 class="ht-title">Your homemade favourites, remembered.</h1>
+      <p class="ht-subtitle">
+        Sign in to save delivery addresses, revisit your wishlist and follow every order from the
+        kitchen to your door.
+      </p>
+
+      <ul class="auth-perks">
+        <li>
+          <span class="auth-perk-icon">01</span>
+          Keep your saved addresses ready for a faster checkout.
+        </li>
+        <li>
+          <span class="auth-perk-icon">02</span>
+          Revisit the dishes your family loved most.
+        </li>
+        <li>
+          <span class="auth-perk-icon">03</span>
+          Follow every order with warm, clear updates.
+        </li>
+      </ul>
+
+      <p class="auth-intro-note">Freshly prepared, carefully packed and always made with love.</p>
+    </aside>
+
+    <div class="ht-card auth-card">
+      <div class="auth-tabs" role="tablist" aria-label="Account access">
+        <button
+          type="button"
+          role="tab"
+          [attr.aria-selected]="mode() === 'login'"
+          [class.is-active]="mode() === 'login'"
+          (click)="setMode('login')"
+        >
+          Login
+        </button>
+        <button
+          type="button"
+          role="tab"
+          [attr.aria-selected]="mode() === 'signup'"
+          [class.is-active]="mode() === 'signup'"
+          (click)="setMode('signup')"
+        >
+          Sign Up
+        </button>
+      </div>
+
+      @if (step() === 'mobile') {
+        <div class="auth-form-head">
+          <p class="ht-eyebrow">{{ mode() === 'login' ? 'Welcome back' : 'Join our table' }}</p>
+          <h2 class="auth-form-title">
+            {{ mode() === 'login' ? 'Login to your account' : 'Create your account' }}
+          </h2>
+          <p class="auth-form-copy">
+            {{
+              mode() === 'login'
+                ? 'Use the mobile number you registered with Healthy Tummy.'
+                : 'Tell us your name and mobile number to start your homemade food account.'
+            }}
+          </p>
+        </div>
+
+        @if (mode() === 'signup') {
+          <label class="ht-field">
+            <span>Your name</span>
+            <input
+              type="text"
+              #nameInput
+              [value]="name()"
+              (input)="name.set(nameInput.value)"
+              placeholder="e.g. Ananya Sharma"
+              autocomplete="name"
+            />
+          </label>
+        }
+
+        <label class="ht-field">
+          <span>Mobile number</span>
+          <div class="auth-mobile-field">
+            <span class="auth-country-code">+91</span>
+            <input
+              type="tel"
+              #mobileInput
+              [value]="mobile()"
+              (input)="updateMobile(mobileInput.value)"
+              placeholder="10-digit mobile number"
+              inputmode="numeric"
+              maxlength="10"
+              autocomplete="tel-national"
+            />
+          </div>
+        </label>
+
+        @if (message()) {
+          <p class="ht-notice" [class.is-error]="messageTone() === 'error'">{{ message() }}</p>
+        }
+
+        <button
+          type="button"
+          class="ht-button auth-submit"
+          [disabled]="busy()"
+          (click)="continueWithMobile()"
+        >
+          {{ busy() ? 'Please wait…' : 'Continue securely' }}
+        </button>
+
+        <p class="auth-helper">
+          {{ mode() === 'login' ? 'New to Healthy Tummy?' : 'Already have an account?' }}
+          <button
+            type="button"
+            class="auth-inline-button"
+            (click)="setMode(mode() === 'login' ? 'signup' : 'login')"
+          >
+            {{ mode() === 'login' ? 'Create an account' : 'Login instead' }}
+          </button>
+        </p>
+      } @else {
+        <div class="auth-form-head">
+          <button type="button" class="auth-back" (click)="changeNumber()">← Change number</button>
+          <p class="ht-eyebrow">Verify your mobile</p>
+          <h2 class="auth-form-title">Enter your verification code</h2>
+          <p class="auth-form-copy">
+            We have prepared the OTP step for <strong>+91 {{ mobile() }}</strong
+            >. Secure code delivery will be enabled when account verification is connected.
+          </p>
+        </div>
+
+        <label class="ht-field">
+          <span>6-digit OTP</span>
+          <input
+            type="text"
+            class="auth-otp-input"
+            #otpInput
+            [value]="otp()"
+            (input)="updateOtp(otpInput.value)"
+            placeholder="000000"
+            inputmode="numeric"
+            maxlength="6"
+            autocomplete="one-time-code"
+          />
+        </label>
+
+        @if (message()) {
+          <p class="ht-notice" [class.is-error]="messageTone() === 'error'">{{ message() }}</p>
+        }
+
+        <button
+          type="button"
+          class="ht-button auth-submit"
+          [disabled]="busy()"
+          (click)="verifyOtp()"
+        >
+          {{ busy() ? 'Verifying…' : 'Verify and continue' }}
+        </button>
+
+        <p class="auth-helper">
+          Didn't receive a code?
+          <button
+            type="button"
+            class="auth-inline-button"
+            [disabled]="busy()"
+            (click)="resendOtp()"
+          >
+            Resend OTP
+          </button>
+        </p>
+      }
+
+      <p class="auth-security-note">
+        Your mobile number is used only to keep your Healthy Tummy account and orders secure.
+      </p>
+    </div>
+  </div>
+</section>

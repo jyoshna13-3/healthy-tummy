@@ -1,0 +1,61 @@
+<div class="ht-section-head">
+  <div>
+    <p class="ht-eyebrow">Saved with love</p>
+    <h2 class="panel-title">My Wishlist</h2>
+  </div>
+  @if (items().length > 0) {
+    <a routerLink="/checkout" class="ht-button ht-button--quiet">Go to cart</a>
+  }
+</div>
+
+@if (notice()) {
+  <p class="ht-notice">{{ notice() }}</p>
+}
+
+@if (items().length > 0) {
+  <div class="wishlist-grid">
+    @for (item of items(); track item.id) {
+      <article class="wishlist-card">
+        <div class="wishlist-media">
+          <img [src]="item.image" [alt]="item.name" loading="lazy" />
+        </div>
+        <div class="wishlist-body">
+          <h3>{{ item.name }}</h3>
+          <p>{{ item.description }}</p>
+          <div class="wishlist-foot">
+            <span class="wishlist-price">{{
+              item.price | currency: 'INR' : 'symbol' : '1.0-0'
+            }}</span>
+            <div class="wishlist-actions">
+              <button type="button" class="ht-button ht-button--quiet" (click)="remove(item)">
+                Remove
+              </button>
+              <button type="button" class="ht-button" (click)="addToCart(item)">Add to cart</button>
+            </div>
+          </div>
+        </div>
+      </article>
+    }
+  </div>
+} @else {
+  <div class="ht-empty">
+    <span class="ht-empty-icon">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path
+          d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78Z"
+        />
+      </svg>
+    </span>
+    <h3>Your wishlist is waiting</h3>
+    <p>Tap the heart beside a dish you love and it will be kept safe here.</p>
+    <a routerLink="/" class="ht-button">Explore the menu</a>
+  </div>
+}

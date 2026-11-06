@@ -1,0 +1,127 @@
+<section class="ht-page checkout-page">
+  <div class="ht-container checkout-shell">
+    <div class="checkout-head">
+      <p class="ht-eyebrow">Almost at your table</p>
+      <h1 class="ht-title">Review your homemade order</h1>
+      <p class="ht-subtitle">
+        Choose a delivery address, check every dish and confirm when everything feels just right.
+      </p>
+    </div>
+
+    @if (cart.items().length > 0) {
+      <div class="checkout-grid">
+        <div class="checkout-main">
+          <section class="ht-card checkout-panel">
+            <div class="checkout-panel-head">
+              <div>
+                <p class="ht-eyebrow">Delivery address</p>
+                <h2>Where should we bring it?</h2>
+              </div>
+              <a routerLink="/account/addresses" class="checkout-link">Manage addresses</a>
+            </div>
+
+            @if (addresses().length > 0) {
+              <div class="checkout-addresses">
+                @for (address of addresses(); track address.id) {
+                  <label
+                    class="checkout-address"
+                    [class.is-selected]="selectedAddressId() === address.id"
+                  >
+                    <input
+                      type="radio"
+                      name="delivery-address"
+                      [value]="address.id"
+                      [checked]="selectedAddressId() === address.id"
+                      (change)="selectAddress(address.id)"
+                    />
+                    <span class="checkout-address-label">{{ address.label }}</span>
+                    <span class="checkout-address-line">
+                      {{ address.houseNumber }}, {{ address.street }}, {{ address.area }}
+                    </span>
+                    <span class="checkout-address-line">
+                      {{ address.city }}, {{ address.state }} — {{ address.pincode }}
+                    </span>
+                  </label>
+                }
+              </div>
+            } @else {
+              <div class="checkout-missing">
+                <p>No saved address yet. Add one so we know where to bring your meal.</p>
+                <a routerLink="/account/addresses" class="ht-button">Add an address</a>
+              </div>
+            }
+          </section>
+
+          <section class="ht-card checkout-panel">
+            <div class="checkout-panel-head">
+              <div>
+                <p class="ht-eyebrow">Your dishes</p>
+                <h2>Order summary</h2>
+              </div>
+              <a routerLink="/" class="checkout-link">Add more dishes</a>
+            </div>
+
+            <div class="checkout-items">
+              @for (item of cart.items(); track item.id) {
+                <div class="checkout-item">
+                  <span
+                    >{{ item.name }} <span class="checkout-qty">× {{ item.quantity }}</span></span
+                  >
+                  <span>{{
+                    item.price * item.quantity | currency: 'INR' : 'symbol' : '1.0-0'
+                  }}</span>
+                </div>
+              }
+            </div>
+          </section>
+        </div>
+
+        <aside class="ht-card checkout-total-card">
+          <p class="ht-eyebrow">Order total</p>
+          <p class="checkout-amount">
+            {{ cart.subtotal() | currency: 'INR' : 'symbol' : '1.0-0' }}
+          </p>
+          <p class="checkout-note">
+            Freshly prepared after confirmation. We will keep you updated as your meal moves from
+            our kitchen to your door.
+          </p>
+
+          @if (message()) {
+            <p class="ht-notice is-error">{{ message() }}</p>
+          }
+
+          <button
+            type="button"
+            class="ht-button checkout-confirm"
+            [disabled]="placing()"
+            (click)="placeOrder()"
+          >
+            {{ placing() ? 'Placing order…' : 'Confirm order' }}
+          </button>
+          <p class="checkout-secure">Secure account checkout</p>
+        </aside>
+      </div>
+    } @else {
+      <div class="ht-empty checkout-empty">
+        <span class="ht-empty-icon">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <circle cx="9" cy="20" r="1.5" />
+            <circle cx="18" cy="20" r="1.5" />
+            <path d="M3 4h2l2.4 12.2a2 2 0 0 0 2 1.6h7.9a2 2 0 0 0 2-1.6L21 7H6" />
+          </svg>
+        </span>
+        <h3>Your cart is waiting for something delicious</h3>
+        <p>Explore the menu and add a homemade favourite before checking out.</p>
+        <a routerLink="/" class="ht-button">Explore the menu</a>
+      </div>
+    }
+  </div>
+</section>

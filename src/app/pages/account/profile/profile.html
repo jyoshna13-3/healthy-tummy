@@ -1,0 +1,81 @@
+<div class="ht-section-head">
+  <div>
+    <p class="ht-eyebrow">Personal details</p>
+    <h2 class="panel-title">My Profile</h2>
+  </div>
+</div>
+
+@if (auth.profile(); as profile) {
+  <div class="profile-shell">
+    <div class="profile-identity ht-card">
+      <span class="profile-avatar">{{ initials(profile.name) }}</span>
+      <div>
+        <p class="profile-name">{{ profile.name }}</p>
+        <p class="profile-mobile">+91 {{ profile.mobile }}</p>
+        @if (profile.email) {
+          <p class="profile-email">{{ profile.email }}</p>
+        }
+      </div>
+    </div>
+
+    <form class="profile-form ht-card" [formGroup]="form" (ngSubmit)="saveProfile()" novalidate>
+      <div class="profile-form-head">
+        <p class="ht-eyebrow">Account details</p>
+        <h3>Keep your details warm and up to date</h3>
+      </div>
+
+      <label class="ht-field">
+        <span>Your name</span>
+        <input type="text" formControlName="name" autocomplete="name" />
+        @if (form.controls.name.invalid && form.controls.name.touched) {
+          <small class="field-error">Please share a name with at least 2 characters.</small>
+        }
+      </label>
+
+      <label class="ht-field">
+        <span>Mobile number</span>
+        <input
+          type="tel"
+          formControlName="mobile"
+          inputmode="numeric"
+          maxlength="10"
+          autocomplete="tel-national"
+        />
+        @if (form.controls.mobile.invalid && form.controls.mobile.touched) {
+          <small class="field-error">Please add a valid 10-digit mobile number.</small>
+        }
+      </label>
+
+      @if (message()) {
+        <p class="ht-notice" [class.is-error]="messageTone() === 'error'">{{ message() }}</p>
+      }
+
+      <button type="submit" class="ht-button" [disabled]="busy()">
+        {{ busy() ? 'Saving…' : 'Save changes' }}
+      </button>
+    </form>
+  </div>
+} @else {
+  <div class="profile-guest ht-card">
+    <span class="profile-guest-icon">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <circle cx="12" cy="8" r="4" />
+        <path d="M4.5 20a7.5 7.5 0 0 1 15 0" />
+      </svg>
+    </span>
+    <h3>Sign in to see your profile</h3>
+    <p>
+      Your name and mobile number will live here once secure Healthy Tummy login is connected. We
+      will never show account details without a verified sign-in.
+    </p>
+    <a routerLink="/login" class="ht-button">Login / Sign Up</a>
+  </div>
+}

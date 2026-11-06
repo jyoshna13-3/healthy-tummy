@@ -1,0 +1,61 @@
+<div class="ht-section-head">
+  <div>
+    <p class="ht-eyebrow">Order history</p>
+    <h2 class="panel-title">My Orders</h2>
+  </div>
+  <p class="panel-meta">
+    {{ orders().length }} {{ orders().length === 1 ? 'order' : 'orders' }} prepared with love
+  </p>
+</div>
+
+@if (orders().length > 0) {
+  <div class="order-list">
+    @for (order of orders(); track order.id) {
+      <article class="order-card">
+        <header class="order-head">
+          <div>
+            <p class="order-id">#{{ order.id }}</p>
+            <p class="order-date">{{ order.date | date: 'mediumDate' }}</p>
+          </div>
+          <span class="order-status" [attr.data-status]="order.status">{{ order.status }}</span>
+        </header>
+
+        <div class="order-items">
+          @for (item of order.items; track item.name) {
+            <div class="order-item">
+              <span
+                >{{ item.name }} <span class="order-qty">× {{ item.quantity }}</span></span
+              >
+              <span>{{ item.price * item.quantity | currency: 'INR' : 'symbol' : '1.0-0' }}</span>
+            </div>
+          }
+        </div>
+
+        <footer class="order-total">
+          <span>Order total</span>
+          <strong>{{ order.amount | currency: 'INR' : 'symbol' : '1.0-0' }}</strong>
+        </footer>
+      </article>
+    }
+  </div>
+} @else {
+  <div class="ht-empty">
+    <span class="ht-empty-icon">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M6 3h12l1 4H5l1-4Z" />
+        <path d="M5 7v13h14V7" />
+        <path d="M9 11h6" />
+      </svg>
+    </span>
+    <h3>No orders yet</h3>
+    <p>Your first homemade meal is waiting. Browse the menu and we will keep it safe here.</p>
+  </div>
+}

@@ -1,0 +1,153 @@
+<div class="account-menu">
+  <button
+    type="button"
+    class="profile-toggle"
+    [class.is-open]="open()"
+    [attr.aria-expanded]="open()"
+    aria-haspopup="menu"
+    aria-controls="account-dropdown"
+    aria-label="Customer account menu"
+    title="Your account"
+    (click)="toggle()"
+  >
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <circle cx="12" cy="8" r="4" />
+      <path d="M4.5 20a7.5 7.5 0 0 1 15 0" />
+    </svg>
+  </button>
+
+  <div
+    id="account-dropdown"
+    class="account-dropdown"
+    [class.is-open]="open()"
+    [attr.aria-hidden]="!open()"
+    role="menu"
+  >
+    @if (auth.profile(); as profile) {
+      <div class="account-user">
+        <span class="account-avatar">{{ initials(profile.name) }}</span>
+        <div>
+          <p class="account-name">{{ profile.name }}</p>
+          <p class="account-mobile">{{ profile.mobile }}</p>
+        </div>
+      </div>
+    } @else {
+      <div class="account-welcome">
+        <span class="account-eyebrow">Your homemade food account</span>
+        <p class="account-title">Welcome to <em>Healthy Tummy</em></p>
+        <p class="account-copy">Sign in to keep your favourite homemade meals close.</p>
+      </div>
+
+      <a routerLink="/login" class="account-login" role="menuitem" (click)="close()">
+        Login / Sign Up
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M5 12h14" />
+          <path d="m13 6 6 6-6 6" />
+        </svg>
+      </a>
+    }
+
+    <div class="account-links">
+      <a routerLink="/account/orders" role="menuitem" (click)="close()">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.7"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M6 3h12l1 4H5l1-4Z" />
+          <path d="M5 7v13h14V7" />
+          <path d="M9 11h6" />
+        </svg>
+        My Orders
+      </a>
+      <a routerLink="/account/addresses" role="menuitem" (click)="close()">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.7"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z" />
+          <circle cx="12" cy="10" r="2.5" />
+        </svg>
+        My Addresses
+      </a>
+      <a routerLink="/account/wishlist" role="menuitem" (click)="close()">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.7"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path
+            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78Z"
+          />
+        </svg>
+        My Wishlist
+      </a>
+      <a routerLink="/account/profile" role="menuitem" (click)="close()">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.7"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="8" r="4" />
+          <path d="M4.5 20a7.5 7.5 0 0 1 15 0" />
+        </svg>
+        My Profile
+      </a>
+      @if (auth.profile()) {
+        <button type="button" class="account-logout" role="menuitem" (click)="signOut()">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.7"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M15 4h4v16h-4" />
+            <path d="M10 8l-4 4 4 4" />
+            <path d="M6 12h9" />
+          </svg>
+          Logout
+        </button>
+      }
+    </div>
+
+    @if (!auth.profile()) {
+      <p class="account-note">These pages are previews until secure mobile login is connected.</p>
+    }
+  </div>
+</div>

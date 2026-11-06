@@ -1,0 +1,102 @@
+<section class="ht-page account-page">
+  <div class="ht-container account-shell">
+    <aside class="account-sidebar">
+      <p class="ht-eyebrow">Healthy Tummy account</p>
+      <h1 class="account-heading">
+        @if (firstName()) {
+          Hello, {{ firstName() }}
+        } @else {
+          Your account
+        }
+      </h1>
+      <p class="account-sidebar-copy">
+        A quiet corner for your addresses, favourite dishes and every homemade meal you have
+        ordered.
+      </p>
+
+      <nav class="account-nav" aria-label="Account">
+        <a routerLink="orders" routerLinkActive="is-active">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.7"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M6 3h12l1 4H5l1-4Z" />
+            <path d="M5 7v13h14V7" />
+            <path d="M9 11h6" />
+          </svg>
+          My Orders
+        </a>
+        <a routerLink="addresses" routerLinkActive="is-active">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.7"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z" />
+            <circle cx="12" cy="10" r="2.5" />
+          </svg>
+          My Addresses
+        </a>
+        <a routerLink="wishlist" routerLinkActive="is-active">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.7"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path
+              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78Z"
+            />
+          </svg>
+          My Wishlist
+        </a>
+        <a routerLink="profile" routerLinkActive="is-active">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.7"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="8" r="4" />
+            <path d="M4.5 20a7.5 7.5 0 0 1 15 0" />
+          </svg>
+          My Profile
+        </a>
+      </nav>
+
+      <a routerLink="/" class="account-back">← Continue browsing</a>
+    </aside>
+
+    <div class="account-body">
+      @if (!auth.isAuthenticated()) {
+        <div class="account-preview">
+          <div>
+            <p class="account-preview-title">You are previewing the account area</p>
+            <p>
+              Secure login is not connected yet, so these pages are ready for the day your Healthy
+              Tummy account can sync saved details.
+            </p>
+          </div>
+          <a routerLink="/login" class="ht-button ht-button--quiet">Login / Sign Up</a>
+        </div>
+      }
+
+      <router-outlet />
+    </div>
+  </div>
+</section>
