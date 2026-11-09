@@ -94,6 +94,16 @@ button:focus-visible {
   outline-offset: 3px;
 }
 
+.food-card {
+  cursor: pointer;
+}
+
+.food-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 6px;
+  border-radius: 16px;
+}
+
 ::selection {
   background: var(--accent-soft);
   color: var(--ink);

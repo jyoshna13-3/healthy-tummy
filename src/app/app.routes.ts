@@ -14,6 +14,12 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/auth/login/login').then((module) => module.LoginPage),
   },
   {
+    path: 'food/:id',
+    title: 'Food Details | Healthy Tummy',
+    loadComponent: () =>
+      import('./pages/food-details/food-details').then((module) => module.FoodDetailsPage),
+  },
+  {
     path: 'account',
     loadComponent: () =>
       import('./pages/account/account-layout').then((module) => module.AccountLayout),

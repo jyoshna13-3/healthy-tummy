@@ -57,6 +57,11 @@ export class App {
     this.menuOpen.set(false);
   }
 
+  protected openFood(id: string, event?: Event): void {
+    event?.preventDefault();
+    this.router.navigate(['/food', id]);
+  }
+
   private isHomeUrl(url: string): boolean {
     return url.split(/[?#]/)[0] === '/';
   }

@@ -176,7 +176,14 @@
         </div>
 
         <div class="food-grid">
-          <article class="food-card">
+          <article
+            class="food-card"
+            role="link"
+            tabindex="0"
+            (click)="openFood('biryani', $event)"
+            (keydown.enter)="openFood('biryani', $event)"
+            (keydown.space)="openFood('biryani', $event)"
+          >
             <div class="food-media">
               <img
                 src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80"
@@ -188,10 +195,17 @@
             </div>
             <h3>Homemade Chicken Biryani</h3>
             <p>Rich flavours, prepared fresh.</p>
-            <a href="#categories" class="text-link">Explore dish</a>
+            <span class="text-link">Explore dish</span>
           </article>
 
-          <article class="food-card">
+          <article
+            class="food-card"
+            role="link"
+            tabindex="0"
+            (click)="openFood('curry', $event)"
+            (keydown.enter)="openFood('curry', $event)"
+            (keydown.space)="openFood('curry', $event)"
+          >
             <div class="food-media">
               <img
                 src="https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=800&q=80"
@@ -203,10 +217,17 @@
             </div>
             <h3>Homestyle Chicken Curry</h3>
             <p>Traditional taste and comfort.</p>
-            <a href="#categories" class="text-link">Explore dish</a>
+            <span class="text-link">Explore dish</span>
           </article>
 
-          <article class="food-card">
+          <article
+            class="food-card"
+            role="link"
+            tabindex="0"
+            (click)="openFood('fry', $event)"
+            (keydown.enter)="openFood('fry', $event)"
+            (keydown.space)="openFood('fry', $event)"
+          >
             <div class="food-media">
               <img
                 src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=800&q=80"
@@ -218,10 +239,17 @@
             </div>
             <h3>Homemade Chicken Fry</h3>
             <p>Freshly cooked with care.</p>
-            <a href="#categories" class="text-link">Explore dish</a>
+            <span class="text-link">Explore dish</span>
           </article>
 
-          <article class="food-card">
+          <article
+            class="food-card"
+            role="link"
+            tabindex="0"
+            (click)="openFood('brownies', $event)"
+            (keydown.enter)="openFood('brownies', $event)"
+            (keydown.space)="openFood('brownies', $event)"
+          >
             <div class="food-media">
               <img
                 src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=800&q=80"
@@ -233,7 +261,7 @@
             </div>
             <h3>Chocolate Brownies</h3>
             <p>A little homemade sweetness.</p>
-            <a href="#categories" class="text-link">Explore dish</a>
+            <span class="text-link">Explore dish</span>
           </article>
         </div>
       </div>

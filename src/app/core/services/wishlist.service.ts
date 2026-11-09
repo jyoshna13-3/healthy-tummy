@@ -35,6 +35,28 @@ export class WishlistService {
   readonly items = this.itemsState.asReadonly();
   readonly count = computed(() => this.itemsState().length);
 
+  has(id: string): boolean {
+    return this.itemsState().some((item) => item.id === id);
+  }
+
+  add(item: WishlistItem): void {
+    if (this.has(item.id)) {
+      return;
+    }
+
+    this.itemsState.update((items) => [item, ...items]);
+  }
+
+  toggle(item: WishlistItem): boolean {
+    if (this.has(item.id)) {
+      this.remove(item.id);
+      return false;
+    }
+
+    this.add(item);
+    return true;
+  }
+
   remove(id: string): void {
     this.itemsState.update((items) => items.filter((item) => item.id !== id));
   }

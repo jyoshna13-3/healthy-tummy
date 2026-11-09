@@ -241,13 +241,13 @@
 }
 
 .hero {
-  padding: clamp(2.75rem, 5.5vw, 5rem) 0 clamp(3.5rem, 7vw, 6.5rem);
+  padding: clamp(1.75rem, 3vw, 2.75rem) 0 clamp(3.5rem, 7vw, 6.5rem);
 }
 
 .hero-inner {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr);
-  align-items: center;
+  align-items: start;
   gap: clamp(2.5rem, 6vw, 6rem);
 }
 
