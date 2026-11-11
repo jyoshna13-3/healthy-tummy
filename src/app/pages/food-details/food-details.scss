@@ -438,6 +438,71 @@
   color: var(--muted);
 }
 
+.portion-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.portion-option {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.85rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  text-align: left;
+  cursor: pointer;
+
+  &.is-selected {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+}
+
+.portion-check {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border: 1.5px solid var(--line);
+  border-radius: 50%;
+  background: var(--surface);
+  color: transparent;
+
+  svg {
+    width: 13px;
+    height: 13px;
+  }
+}
+
+.portion-option.is-selected .portion-check {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.portion-copy {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.portion-weight {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
 .food-details-notice {
   margin: 0;
   padding: 0.75rem 0.95rem;
@@ -674,6 +739,10 @@
   .food-details-actions {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .portion-options {
+    grid-template-columns: 1fr;
   }
 
   .quantity-selector {

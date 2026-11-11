@@ -48,8 +48,12 @@ export interface WishlistItem {
 
 export interface CartItem {
   id: string;
+  lineId?: string;
   name: string;
   price: number;
   quantity: number;
   image: string;
+  portionId?: 'half' | 'full';
+  portionLabel?: string;
+  portionWeight?: string;
 }

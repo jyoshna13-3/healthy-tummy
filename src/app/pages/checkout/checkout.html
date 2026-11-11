@@ -62,14 +62,78 @@
             </div>
 
             <div class="checkout-items">
-              @for (item of cart.items(); track item.id) {
+              @for (item of cart.items(); track item.lineId ?? item.id) {
                 <div class="checkout-item">
-                  <span
-                    >{{ item.name }} <span class="checkout-qty">× {{ item.quantity }}</span></span
-                  >
-                  <span>{{
-                    item.price * item.quantity | currency: 'INR' : 'symbol' : '1.0-0'
-                  }}</span>
+                  <div class="checkout-item-copy">
+                    <span class="checkout-item-name">{{ item.name }}</span>
+                    <div class="checkout-item-meta">
+                      @if (item.portionLabel) {
+                        <span class="checkout-portion">
+                          {{ item.portionLabel }} · {{ item.portionWeight }}
+                        </span>
+                      }
+                      <span class="checkout-unit-price">
+                        {{ item.price | currency: 'INR' : 'symbol' : '1.0-0' }} each
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="checkout-item-side">
+                    <div
+                      class="checkout-quantity"
+                      role="group"
+                      [attr.aria-label]="'Quantity for ' + item.name"
+                    >
+                      <button
+                        type="button"
+                        class="checkout-qty-button"
+                        aria-label="Decrease quantity"
+                        [disabled]="item.quantity <= 1"
+                        (click)="decreaseQuantity(item)"
+                      >
+                        −
+                      </button>
+                      <span class="checkout-qty-value" aria-live="polite">
+                        {{ item.quantity }}
+                      </span>
+                      <button
+                        type="button"
+                        class="checkout-qty-button"
+                        aria-label="Increase quantity"
+                        (click)="increaseQuantity(item)"
+                      >
+                        +
+                      </button>
+                    </div>
+
+                    <span class="checkout-line-total">
+                      {{ item.price * item.quantity | currency: 'INR' : 'symbol' : '1.0-0' }}
+                    </span>
+
+                    <button
+                      type="button"
+                      class="checkout-remove"
+                      [attr.aria-label]="'Remove ' + item.name"
+                      title="Remove item"
+                      (click)="removeItem(item)"
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <path d="M3 6h18" />
+                        <path d="M8 6V4h8v2" />
+                        <path d="M19 6l-1 14H6L5 6" />
+                        <path d="M10 11v5" />
+                        <path d="M14 11v5" />
+                      </svg>
+                    </button>
+                  </div>
                 </div>
               }
             </div>

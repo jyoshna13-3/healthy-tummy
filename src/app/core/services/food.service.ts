@@ -1,5 +1,25 @@
-import { Injectable } from '@angular/core';
-import { FoodItem } from '../models/food.models';
+import { Injectable, signal } from '@angular/core';
+import { FoodItem, FoodPortion } from '../models/food.models';
+
+const PREPARATION_TIME = 'Approximately 1 hour';
+const ADVANCE_ORDER_NOTICE = 'Please place your order at least 1 hour in advance.';
+
+function buildPortions(price: number): FoodPortion[] {
+  return [
+    {
+      id: 'half',
+      label: 'Half',
+      weight: '150 grams',
+      price: Math.round(price / 2),
+    },
+    {
+      id: 'full',
+      label: 'Full',
+      weight: '300 grams',
+      price,
+    },
+  ];
+}
 
 const FOOD_ITEMS: FoodItem[] = [
   {
@@ -12,11 +32,10 @@ const FOOD_ITEMS: FoodItem[] = [
     available: true,
     rating: null,
     reviewCount: 0,
-    preparationTime: null,
-    portionSize: null,
-    advanceOrderRequired: false,
-    advanceOrderNotice:
-      'No advance order required. Each dish is prepared fresh after confirmation.',
+    preparationTime: PREPARATION_TIME,
+    portions: buildPortions(249),
+    advanceOrderRequired: true,
+    advanceOrderNotice: ADVANCE_ORDER_NOTICE,
   },
   {
     id: 'curry',
@@ -28,11 +47,10 @@ const FOOD_ITEMS: FoodItem[] = [
     available: true,
     rating: null,
     reviewCount: 0,
-    preparationTime: null,
-    portionSize: null,
-    advanceOrderRequired: false,
-    advanceOrderNotice:
-      'No advance order required. Each dish is prepared fresh after confirmation.',
+    preparationTime: PREPARATION_TIME,
+    portions: buildPortions(229),
+    advanceOrderRequired: true,
+    advanceOrderNotice: ADVANCE_ORDER_NOTICE,
   },
   {
     id: 'fry',
@@ -44,11 +62,10 @@ const FOOD_ITEMS: FoodItem[] = [
     available: true,
     rating: null,
     reviewCount: 0,
-    preparationTime: null,
-    portionSize: null,
-    advanceOrderRequired: false,
-    advanceOrderNotice:
-      'No advance order required. Each dish is prepared fresh after confirmation.',
+    preparationTime: PREPARATION_TIME,
+    portions: buildPortions(199),
+    advanceOrderRequired: true,
+    advanceOrderNotice: ADVANCE_ORDER_NOTICE,
   },
   {
     id: 'brownies',
@@ -61,19 +78,26 @@ const FOOD_ITEMS: FoodItem[] = [
     available: true,
     rating: null,
     reviewCount: 0,
-    preparationTime: null,
-    portionSize: null,
-    advanceOrderRequired: false,
-    advanceOrderNotice:
-      'No advance order required. Each dish is prepared fresh after confirmation.',
+    preparationTime: PREPARATION_TIME,
+    portions: buildPortions(129),
+    advanceOrderRequired: true,
+    advanceOrderNotice: ADVANCE_ORDER_NOTICE,
   },
 ];
 
 @Injectable({ providedIn: 'root' })
 export class FoodService {
-  readonly items = FOOD_ITEMS;
+  private readonly itemsState = signal<FoodItem[]>(FOOD_ITEMS);
+
+  readonly items = this.itemsState.asReadonly();
 
   getById(id: string): FoodItem | undefined {
-    return FOOD_ITEMS.find((item) => item.id === id);
+    return this.itemsState().find((item) => item.id === id);
+  }
+
+  setAvailability(id: string, available: boolean): void {
+    this.itemsState.update((items) =>
+      items.map((item) => (item.id === id ? { ...item, available } : item)),
+    );
   }
 }

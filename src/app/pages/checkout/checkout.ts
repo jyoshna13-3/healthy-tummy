@@ -1,6 +1,7 @@
 import { CurrencyPipe } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
+import { CartItem } from '../../core/models/customer.models';
 import { AddressService } from '../../core/services/address.service';
 import { AuthService } from '../../core/services/auth.service';
 import { CartService } from '../../core/services/cart.service';
@@ -28,6 +29,19 @@ export class CheckoutPage {
     this.selectedAddressId.set(id);
   }
 
+  protected increaseQuantity(item: CartItem): void {
+    this.cart.updateQuantity(this.cartKey(item), item.quantity + 1);
+  }
+
+  protected decreaseQuantity(item: CartItem): void {
+    this.cart.updateQuantity(this.cartKey(item), Math.max(1, item.quantity - 1));
+  }
+
+  protected removeItem(item: CartItem): void {
+    this.cart.removeItem(this.cartKey(item));
+    this.message.set('');
+  }
+
   protected async placeOrder(): Promise<void> {
     if (!this.selectedAddressId() || this.cart.items().length === 0) {
       this.message.set('Please choose a delivery address and add a dish before confirming.');
@@ -47,5 +61,9 @@ export class CheckoutPage {
     this.cart.clear();
     this.placing.set(false);
     await this.router.navigateByUrl('/account/orders');
+  }
+
+  private cartKey(item: CartItem): string {
+    return item.lineId ?? item.id;
   }
 }

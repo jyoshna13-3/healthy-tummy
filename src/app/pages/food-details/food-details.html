@@ -26,7 +26,7 @@
 
           <span class="availability-badge" [class.is-unavailable]="!food.available">
             <span class="availability-dot" aria-hidden="true"></span>
-            {{ food.available ? 'Available' : 'Unavailable' }}
+            {{ food.available ? 'Available' : 'Currently Unavailable' }}
           </span>
 
           <button
@@ -66,9 +66,11 @@
               <h1 [id]="'food-details-title-' + food.id">{{ food.name }}</h1>
 
               <p class="food-details-price">
-                <span class="price-caption">Price</span>
+                <span class="price-caption">
+                  {{ selectedPortion()?.label ?? 'Full' }} portion price
+                </span>
                 <span class="price-value">{{
-                  food.price | currency: 'INR' : 'symbol' : '1.0-0'
+                  displayPrice() | currency: 'INR' : 'symbol' : '1.0-0'
                 }}</span>
               </p>
             </div>
@@ -141,10 +143,7 @@
               </span>
               <div class="fact-copy">
                 <span class="fact-label">Preparation time</span>
-                <span class="fact-value">{{ food.preparationTime ?? 'To be confirmed' }}</span>
-                @if (!food.preparationTime) {
-                  <span class="fact-note">The kitchen will confirm this detail.</span>
-                }
+                <span class="fact-value">{{ food.preparationTime ?? 'Approximately 1 hour' }}</span>
               </div>
             </div>
 
@@ -164,10 +163,10 @@
               </span>
               <div class="fact-copy">
                 <span class="fact-label">Portion size</span>
-                <span class="fact-value">{{ food.portionSize ?? 'To be confirmed' }}</span>
-                @if (!food.portionSize) {
-                  <span class="fact-note">The kitchen will confirm this detail.</span>
-                }
+                <span class="fact-value">
+                  {{ selectedPortion()?.label }} – {{ selectedPortion()?.weight }}
+                </span>
+                <span class="fact-note">Choose Half or Full below.</span>
               </div>
             </div>
 
@@ -188,7 +187,7 @@
               <div class="fact-copy">
                 <span class="fact-label">Availability</span>
                 <span class="fact-value" [class.is-unavailable]="!food.available">
-                  {{ food.available ? 'Available' : 'Unavailable' }}
+                  {{ food.available ? 'Available' : 'Currently Unavailable' }}
                 </span>
               </div>
             </div>
@@ -212,12 +211,50 @@
               <div class="fact-copy">
                 <span class="fact-label">Advance order</span>
                 <span class="fact-value">
-                  {{ food.advanceOrderRequired ? 'Required' : 'Not required' }}
+                  {{
+                    food.advanceOrderRequired ? food.advanceOrderNotice : 'No advance order needed.'
+                  }}
                 </span>
-                <span class="fact-note">{{ food.advanceOrderNotice }}</span>
               </div>
             </div>
           </div>
+
+          <section class="portion-block" aria-labelledby="portion-title">
+            <span class="quantity-label" id="portion-title">Choose your portion</span>
+
+            <div class="portion-options" role="group" aria-labelledby="portion-title">
+              @for (portion of food.portions; track portion.id) {
+                <button
+                  type="button"
+                  class="portion-option"
+                  [class.is-selected]="selectedPortionId() === portion.id"
+                  [attr.aria-pressed]="selectedPortionId() === portion.id"
+                  [disabled]="!food.available"
+                  (click)="selectPortion(portion.id)"
+                >
+                  <span class="portion-check" aria-hidden="true">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.4"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="m5 12.5 4.5 4.5L19 7" />
+                    </svg>
+                  </span>
+                  <span class="portion-copy">
+                    <span class="portion-name">{{ portion.label }}</span>
+                    <span class="portion-weight">{{ portion.weight }}</span>
+                  </span>
+                  <span class="portion-price">{{
+                    portion.price | currency: 'INR' : 'symbol' : '1.0-0'
+                  }}</span>
+                </button>
+              }
+            </div>
+          </section>
 
           @if (notice()) {
             <p class="food-details-notice" role="status">{{ notice() }}</p>
@@ -267,7 +304,7 @@
                 <circle cx="18" cy="20" r="1.4" />
                 <path d="M3 4h2l2.4 12.2a2 2 0 0 0 2 1.6h7.9a2 2 0 0 0 2-1.6L21 7H6" />
               </svg>
-              <span>{{ food.available ? 'Add to Cart' : 'Unavailable' }}</span>
+              <span>{{ food.available ? 'Add to Cart' : 'Currently Unavailable' }}</span>
             </button>
           </div>
 
